@@ -31,14 +31,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
     <script src="firebase.js"></script>
     <script>
-        // Get a reference to the database
-        var database = firebase.database();
+        // initialize
+        firebase.initializeApp(firebaseConfig);
 
-        function submitName() {
-            var name = document.getElementById("nameInput").value;
+        // reference your database
+        const playerNamesDB = firebase.database().ref('playerNames');
+        document.getElementById("name").addEventListener("submit", submitName)
+
+        function submitName(e) {
+            e.preventDefault(); // yeah i dont understand this line
+            var name = document.getElementById("name").value; // retrieve user input
+
             if (name) {
                 // Push the user's input to the Firebase database
-                database.ref("userNames").push().set({
+                var newEntry = playerNamesDB.push()
+                newEntry.set({
                     name: name
                 });
                 alert("Name submitted successfully!");
