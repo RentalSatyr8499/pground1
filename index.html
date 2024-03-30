@@ -34,10 +34,14 @@
     <input type="text" id="name" placeholder="Enter your name">
     <button type="submit" onclick="submitName()">Submit</button>
 
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
     <script src="firebase.js"></script>
     <script src="rainbow circle.js"></script>
-    <!-- <script> -->
+    <!-- <script>
         // initialize
         firebase.initializeApp(firebaseConfig);
 
@@ -61,6 +65,6 @@
                 alert("Please enter your name.");
             }
         }
-    <!-- </script> -->
+    </script> -->
 </body>
 </html>
