@@ -1,4 +1,5 @@
 const canvas = document.getElementById("myCanvas");
+// uhhh
 const ctx = canvas.getContext("2d");
 const radius = 100;
 const centerX = canvas.width / 2;
