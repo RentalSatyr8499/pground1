@@ -1,11 +1,10 @@
-const canvas = document.getElementById("rainbowCircle");
+const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 const radius = 100;
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 const colors = ["red", "orange", "yellow", "green", "blue", "purple"];
 let currentColorIndex = 0;
-
 function drawCircle() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
