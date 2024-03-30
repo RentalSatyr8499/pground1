@@ -6,6 +6,12 @@
     <title>My Web Page</title>
     <style>
         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
             text-align: center;
         }
@@ -30,7 +36,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
     <script src="firebase.js"></script>
-    <script>
+    <script src="rainbow circle.js"></script>
+    <!-- <script> -->
         // initialize
         firebase.initializeApp(firebaseConfig);
 
@@ -49,10 +56,11 @@
                     name: name
                 });
                 alert("Name submitted successfully!");
+                document.getElementById("name").reset()
             } else {
                 alert("Please enter your name.");
             }
         }
-    </script>
+    <!-- </script> -->
 </body>
 </html>
