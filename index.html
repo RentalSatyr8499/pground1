@@ -25,22 +25,12 @@
 </head>
 <body>
     <h1>What is your name?</h1>
-    <input type="text" id="nameInput" placeholder="Enter your name">
-    <button onclick="submitName()">Submit</button>
+    <input type="text" id="name" placeholder="Enter your name">
+    <button type="submit" onclick="submitName()">Submit</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="firebase.js"></script>
     <script>
-        // Initialize Firebase
-        var firebaseConfig = {
-            apiKey: "AIzaSyASA1As8H5WwkUnuEMssAIsaJjupSxSH3Q",
-            authDomain: "playground-6b9e0.firebaseapp.com",
-            projectId: "playground-6b9e0",
-            storageBucket: "playground-6b9e0.appspot.com",
-            messagingSenderId: "658513536207",
-            appId: "1:658513536207:web:9f330afd28324e119b43ba", 
-            measurementId: "G-WD4J47FFM5"
-        };
-        firebase.initializeApp(firebaseConfig);
-
         // Get a reference to the database
         var database = firebase.database();
 
