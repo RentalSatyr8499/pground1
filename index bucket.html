@@ -50,7 +50,7 @@
         document.getElementById("name").addEventListener("submit", submitName)
 
         function submitName(e) {
-            // e.preventDefault(); // yeah i dont understand this line
+            // submit name to firebase database
             var name = document.getElementById("name").value; // retrieve user input
 
             if (name) {
@@ -64,6 +64,15 @@
             } else {
                 alert("Please enter your name.");
             }
+
+            document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission behavior
+
+            // Load game.js dynamically
+            const script = document.createElement('script');
+            script.src = 'rainbow circle.js'; // Replace with the actual path to your game.js
+            document.body.appendChild(script);
+        });
         }
     </script>
 </body>
