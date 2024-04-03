@@ -1,0 +1,50 @@
+// Define a function to draw the boxes and display text
+function drawBoxes() {
+    for (var j = 1; j <= 3; j++) {
+        for (var i = 1; i <= 3; i++) {
+            var x = i * (boxSize + boxSpacing) - (boxSize / 2); 
+            var y = j * (boxSize + boxSpacing) - (boxSize / 2);
+
+            // Get dictionary from array
+            var levelInfo = levelDisplay[j - 1][i - 1];
+            
+            if (levelInfo.on) {
+                // Draw box
+                ctx.fillStyle = levelInfo.color;
+                ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
+
+                // Display text
+                ctx.fillStyle = "black";
+                ctx.font = "30px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(levelInfo.text, x, y);
+
+                // Add event listener for hover
+                canvas.addEventListener("mousemove", function(event) {
+                    var rect = canvas.getBoundingClientRect();
+                    var mouseX = event.clientX - rect.left;
+                    var mouseY = event.clientY - rect.top;
+
+                    // Check if mouse is inside the current box
+                    if (mouseX > x - (boxSize / 2) && mouseX < x + (boxSize / 2) &&
+                        mouseY > y - (boxSize / 2) && mouseY < y + (boxSize / 2)) {
+                        // Change box color on hover (you can replace "yellow" with your desired hover color)
+                        ctx.fillStyle = "yellow";
+                        ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
+                    } else {
+                        // Reset box color
+                        ctx.fillStyle = levelInfo.color;
+                        ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
+                    }
+                });
+            } else {
+                ctx.fillStyle = "black";
+                ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
+            }
+        }
+    }
+}
+
+// Call the function to draw the boxes
+drawBoxes();
