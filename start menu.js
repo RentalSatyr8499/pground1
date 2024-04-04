@@ -1,5 +1,5 @@
 var marginPercent = .2; // percent of canvas that will be taken up by the spacing between boxes
-var day = 7; 
+var day = 4; 
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -57,7 +57,6 @@ function drawStartMenu() {
         }
     }
 }
-drawStartMenu();
 
 function addStartMenuEventListeners(){
     // Add hover and click functionality
@@ -89,7 +88,7 @@ function handleMouseInteraction(event){
                     ctx.fillText(levelInfo.text, x, y);
 
                     if(event.type == "click"){
-                        switchScenes("startMenu", "level1", "level1.js");
+                        switchScenes("showLevel1();");
                     }
                 } else if (levelInfo.on) {
                     // Reset box color
@@ -106,3 +105,8 @@ function handleMouseInteraction(event){
         }
 };
 
+function showStartMenu(){
+    drawStartMenu();
+    addStartMenuEventListeners();
+}
+showStartMenu();
