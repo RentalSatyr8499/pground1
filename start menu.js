@@ -64,6 +64,7 @@ function addStartMenuEventListeners(){
     canvas.addEventListener("mousemove", handleMouseInteraction);
     canvas.addEventListener("click", handleMouseInteraction);
 }
+addStartMenuEventListeners();
 
 function handleMouseInteraction(event){
     var rect = canvas.getBoundingClientRect();
@@ -89,7 +90,7 @@ function handleMouseInteraction(event){
                     ctx.fillText(levelInfo.text, x, y);
 
                     if(event.type == "click"){
-                        switchScenes("startMenu", "level1", "level1.js");
+                        switchScript("startMenu");
                     }
                 } else if (levelInfo.on) {
                     // Reset box color

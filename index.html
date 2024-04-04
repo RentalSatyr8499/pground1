@@ -21,24 +21,39 @@
     <canvas id="myCanvas" width="500" height="500"></canvas>
     <script id="startMenu" src="start menu.js"></script>
     <script>
-        function switchScenes(originalSceneTag, newSceneTag, newSceneScriptSrc) {
-            // Get the original scene script element
-            var originalSceneScript = document.getElementById(originalSceneTag);
-        
-            // Check if the original scene script exists
-            if (originalSceneScript) {
-                // Create the new scene script element
-                var newSceneScript = document.createElement(newSceneTag);
-                newSceneScript.src = newSceneScriptSrc;
-        
-                // Replace the original scene script with the new scene script
-                originalSceneScript.parentNode.replaceChild(newSceneScript, originalSceneScript);
-            } else {
-                console.error(`Error: Element with ID '${originalSceneTag}' not found.`);
+        async function loadScript(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = url;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        async function switchScript(oldTag) {
+            // remove old scene
+            document.getElementById(oldTag).remove();
+
+            // clear canvas
+            var canvas = document.getElementById("myCanvas");
+            const context = canvas.getContext("2d");
+            context.globalCompositeOperation = "destination-out";
+            context.fillStyle = "white";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.globalCompositeOperation = "source-over";
+            const clonedCanvas = canvas.cloneNode(true); // remove event listners
+            canvas.parentNode.replaceChild(clonedCanvas, canvas);
+            console.log("canvas cleared!");
+
+            // load new scene
+            try {
+                await loadScript("level 1.js");
+            } catch (error) {
+                console.error("Error loading special.js:", error);
             }
         }
     </script>    
-    
     
 </body>
 </html>
