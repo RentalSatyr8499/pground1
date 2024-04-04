@@ -11,11 +11,34 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-        }  
+        }
+        #level1 {
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
     <canvas id="myCanvas" width="500" height="500"></canvas>
-    <script src="start menu.js"></script>
+    <script id="startMenu" src="start menu.js"></script>
+    <script>
+        function switchScenes(originalSceneTag, newSceneTag, newSceneScriptSrc) {
+            // Get the original scene script element
+            var originalSceneScript = document.getElementById(originalSceneTag);
+        
+            // Check if the original scene script exists
+            if (originalSceneScript) {
+                // Create the new scene script element
+                var newSceneScript = document.createElement(newSceneTag);
+                newSceneScript.src = newSceneScriptSrc;
+        
+                // Replace the original scene script with the new scene script
+                originalSceneScript.parentNode.replaceChild(newSceneScript, originalSceneScript);
+            } else {
+                console.error(`Error: Element with ID '${originalSceneTag}' not found.`);
+            }
+        }
+    </script>    
+    
+    
 </body>
 </html>
