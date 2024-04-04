@@ -90,7 +90,7 @@ function handleMouseInteraction(event){
                     ctx.fillText(levelInfo.text, x, y);
 
                     if(event.type == "click"){
-                        switchScript("startMenu");
+                        switchScript("startMenu", "level1", "level 1.js");
                     }
                 } else if (levelInfo.on) {
                     // Reset box color
