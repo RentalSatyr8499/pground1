@@ -20,35 +20,5 @@
 <body>
     <canvas id="myCanvas" width="500" height="500"></canvas>
     <script id="startMenu" src="start menu.js"></script>   
-    <script src="level 1.js"></script>
-    <script>
-        function switchScenes(nextScene) {
-            var bucket = nextScene;
-            // Get the canvas element
-            const canvas = document.getElementById("myCanvas");
-            const context = canvas.getContext("2d");
-
-            // Set the global composite operation to "destination-out"
-            context.globalCompositeOperation = "destination-out";
-
-            // Fill the entire canvas with white
-            context.fillStyle = "white";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Reset the global composite operation
-            context.globalCompositeOperation = "source-over";
-
-            // Remove all event listeners from the canvas
-            const clonedCanvas = canvas.cloneNode(true);
-            canvas.parentNode.replaceChild(clonedCanvas, canvas);
-
-            // Print a success message
-            console.log("Canvas is now erased, and all event listeners are removed.");
-            
-            eval(bucket);
-            console.log("loaded next scene.");
-        }
-    </script>
-    
 </body>
 </html>

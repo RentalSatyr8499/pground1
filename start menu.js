@@ -1,112 +1,60 @@
-var marginPercent = .2; // percent of canvas that will be taken up by the spacing between boxes
-var day = 4; 
+let canvas = document.getElementById('myCanvas');
+let ctx = canvas.getContext('2d');
 
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
+let blueCircle = {x: 125, y: 125, radius: 50, color: 'blue'};
 
-// Calculate box dimensions
-var boxSize = ((Math.min(canvas.width, canvas.height))*(1 - marginPercent)) / 3;
-var boxSpacing = ((Math.min(canvas.width, canvas.height))*(marginPercent)) / 4;
+// Function to draw blue circle
+function drawBlueCircle() {
+    ctx.beginPath();
+    ctx.arc(blueCircle.x, blueCircle.y, blueCircle.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = blueCircle.color;
+    ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#003300';
+    ctx.stroke();
+}
 
-// Create a 3x3 array with dictionaries
-var levelDisplay = [
-    [{"text": "Day 1", "color": "mediumpurple", "on": true, "script": "level 1.js"}, {"text": "Day 2", "color": "limegreen", "on": false, "script": "level 1.js"}, {"text": "Day 3", "color": "deepskyblue", "on": false, "script": "level 1.js"}],
-    [{"text": "Day 4", "color": "gold", "on": true, "script": "level 1.js"}, {"text": "Day 5", "color": "mediumpurple", "on": false, "script": "level 1.js"}, {"text": "Day 6", "color": "darkorange", "on": false, "script": "level 1.js"}],
-    [{"text": "Day 7", "color": "lightpink", "on": true, "script": "level 1.js"}, {"text": "Day 8", "color": "mediumturquoise", "on": false, "script": "level 1.js"}, {"text": "Day 9", "color": "dimgray", "on": false, "script": "level 1.js"}]
-];
+// Red circle in the center
+let redCircle = {x: canvas.width / 2, y: canvas.height / 2, radius: 50};
 
-// Draw boxes and display text
-function drawStartMenu() {
+function drawRedCircle(x, y) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    drawBlueCircle(); // Redraw the blue circle
+    ctx.beginPath();
+    ctx.arc(x, y, redCircle.radius, 0, Math.PI * 2, false);
+    ctx.fillStyle = 'red';
+    ctx.fill();
 
-    // turn boxes off according to day variable
-    boxesOn = 0;
-    for (var j = 1; j <= 3; j++) {
-        for (var i = 1; i <= 3; i++) {
-                if (boxesOn < day) {
-                    levelDisplay[j-1][i-1]["on"] = true;
-                    boxesOn += 1;
-                }
-                else {
-                    levelDisplay[j-1][i-1]["on"] = false;
-                }
-        }};
+    // Check the distance between the red and blue circles
+    let xDist = redCircle.x - blueCircle.x;
+    let yDist = redCircle.y - blueCircle.y;
+    let distance = Math.sqrt(xDist * xDist + yDist * yDist);
 
-    for (var j = 1; j <= 3; j++) {
-        for (var i = 1; i <= 3; i++) {
-            var x = i * (boxSize + boxSpacing) - (boxSize / 2); 
-            var y = j * (boxSize + boxSpacing) - (boxSize / 2);
-
-            // Get dictionary from array
-            var levelInfo = levelDisplay[j - 1][i - 1];
-            
-            if (levelInfo.on) {
-                // Draw box
-                ctx.fillStyle = levelInfo.color;
-                ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
-
-                // Display text
-                ctx.fillStyle = "black";
-                ctx.font = "30px Arial";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(levelInfo.text, x, y);
-            } else {
-                ctx.fillStyle = "black";
-                ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
-            }
-        }
+    if (distance < redCircle.radius + blueCircle.radius) {
+        blueCircle.color = 'green';
+    } else {
+        blueCircle.color = 'blue';
     }
 }
 
-function addStartMenuEventListeners(){
-    // Add hover and click functionality
-    canvas.addEventListener("mousemove", handleMouseInteraction);
-    canvas.addEventListener("click", handleMouseInteraction);
-}
+drawBlueCircle(); // Initial draw of blue circle
+drawRedCircle(redCircle.x, redCircle.y); // Initial draw of red circle
 
-function handleMouseInteraction(event){
-    var rect = canvas.getBoundingClientRect();
-    var mouseX = event.clientX - rect.left;
-    var mouseY = event.clientY - rect.top;
-
-    for (var j = 1; j <= 3; j++) {
-        for (var i = 1; i <= 3; i++) {
-            var x = i * (boxSize + boxSpacing) - (boxSize / 2); 
-            var y = j * (boxSize + boxSpacing) - (boxSize / 2);
-            var levelInfo = levelDisplay[j - 1][i - 1];
-            var mouseInBox = (mouseX > x - (boxSize / 2) && mouseX < x + (boxSize / 2) && mouseY > y - (boxSize / 2) && mouseY < y + (boxSize / 2))
-
-            if (levelInfo.on && mouseInBox) {
-                    // Change box color on hover (you can replace "yellow" with your desired hover color)
-                    ctx.fillStyle = "yellow";
-                    ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
-                    
-                    ctx.fillStyle = "black";
-                    ctx.font = "30px Arial";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(levelInfo.text, x, y);
-
-                    if(event.type == "click"){
-                        switchScenes("showLevel1();");
-                    }
-                } else if (levelInfo.on) {
-                    // Reset box color
-                    ctx.fillStyle = levelInfo.color;
-                    ctx.fillRect(x - (boxSize / 2), y - (boxSize / 2), boxSize, boxSize);
-                    
-                    ctx.fillStyle = "black";
-                    ctx.font = "30px Arial";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(levelInfo.text, x, y);
-                }
-            }
-        }
-};
-
-function showStartMenu(){
-    drawStartMenu();
-    addStartMenuEventListeners();
-}
-showStartMenu();
+// Event listener for arrow keys
+window.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'ArrowUp':
+            redCircle.y -= 5;
+            break;
+        case 'ArrowDown':
+            redCircle.y += 5;
+            break;
+        case 'ArrowLeft':
+            redCircle.x -= 5;
+            break;
+        case 'ArrowRight':
+            redCircle.x += 5;
+            break;
+    }
+    drawRedCircle(redCircle.x, redCircle.y);
+});
